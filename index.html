@@ -10,7 +10,6 @@
   <title>Mi Agente</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --bg: #0f0f1a;
       --card: #1a1a2e;
@@ -18,17 +17,13 @@
       --text: #e8e8f0;
       --text-muted: #8888aa;
       --accent: #6c63ff;
-      --accent-glow: rgba(108, 99, 255, 0.15);
       --green: #2ecc71;
       --red: #e74c3c;
       --orange: #f39c12;
-      --yellow: #f1c40f;
-      --pink: #e91e8e;
       --blue: #3498db;
       --radius: 16px;
       --shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
       background: var(--bg);
@@ -41,433 +36,206 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
+    .header { text-align: center; padding: 24px 0 16px; }
+    .header .greeting { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .header .date { font-size: 14px; color: var(--text-muted); }
+    .header .updated { font-size: 11px; color: var(--text-muted); margin-top: 8px; opacity: 0.6; }
 
-    /* Header */
-    .header {
-      text-align: center;
-      padding: 24px 0 16px;
-    }
-    .header .greeting {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .header .date {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-    .header .updated {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 8px;
-      opacity: 0.6;
-    }
-
-    /* Cards */
     .card {
       background: var(--card);
       border-radius: var(--radius);
       padding: 20px;
       margin-bottom: 16px;
       box-shadow: var(--shadow);
-      transition: transform 0.2s;
     }
     .card-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+      font-size: 13px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--text-muted);
     }
-    .card-header .icon { font-size: 16px; }
 
-    /* Weather bar */
+    /* Weather */
     .weather-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      margin-bottom: 16px;
+      border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px;
     }
-    .weather-temp {
-      font-size: 36px;
-      font-weight: 700;
-    }
-    .weather-details {
-      text-align: right;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .weather-condition {
-      font-size: 14px;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
+    .weather-temp { font-size: 36px; font-weight: 700; }
+    .weather-details { text-align: right; font-size: 13px; color: var(--text-muted); }
+    .weather-condition { font-size: 14px; color: var(--text); margin-bottom: 2px; }
     .rain-badge {
-      display: inline-block;
-      background: rgba(52, 152, 219, 0.2);
-      color: var(--blue);
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-top: 6px;
+      display: inline-block; background: rgba(52,152,219,0.2); color: var(--blue);
+      padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 6px;
     }
-    .rain-badge.high {
-      background: rgba(231, 76, 60, 0.2);
-      color: var(--red);
-    }
+    .rain-badge.high { background: rgba(231,76,60,0.2); color: var(--red); }
 
     /* Motivacion */
     .motivacion-card {
       background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%);
-      border: 1px solid rgba(108, 99, 255, 0.2);
+      border: 1px solid rgba(108,99,255,0.2);
     }
-    .quote {
-      font-size: 18px;
-      font-style: italic;
-      line-height: 1.5;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-    .quote::before { content: '\201C'; }
-    .quote::after { content: '\201D'; }
-    .author {
-      font-size: 13px;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-    .reflection {
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--text-muted);
-      display: none;
-    }
+    .quote { font-size: 18px; font-style: italic; line-height: 1.5; margin-bottom: 8px; color: #fff; }
+    .quote::before { content: '\201C'; } .quote::after { content: '\201D'; }
+    .author { font-size: 13px; color: var(--accent); margin-bottom: 16px; }
+    .reflection { font-size: 14px; line-height: 1.6; color: var(--text-muted); display: none; }
     .reflection.visible { display: block; margin-bottom: 16px; }
-    .challenge-box {
-      background: rgba(108, 99, 255, 0.1);
-      border-radius: 12px;
-      padding: 14px;
-    }
-    .challenge-box .label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-    .challenge-box .text {
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    .expand-btn {
-      background: none;
-      border: none;
-      color: var(--accent);
-      font-size: 12px;
-      cursor: pointer;
-      padding: 8px 0;
-      font-family: inherit;
-    }
+    .challenge-box { background: rgba(108,99,255,0.1); border-radius: 12px; padding: 14px; }
+    .challenge-box .label { font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+    .challenge-box .text { font-size: 13px; line-height: 1.5; }
+    .expand-btn { background: none; border: none; color: var(--accent); font-size: 12px; cursor: pointer; padding: 8px 0; font-family: inherit; }
 
     /* Agenda */
-    .event {
-      display: flex;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
+    .event { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .event:last-child { border-bottom: none; }
-    .event-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-top: 5px;
-      flex-shrink: 0;
-    }
-    .event-dot.lavanda { background: #9b59b6; }
-    .event-dot.salvia { background: #2ecc71; }
-    .event-dot.uva { background: #8e44ad; }
-    .event-dot.flamingo { background: #e91e8e; }
-    .event-dot.banana { background: #f1c40f; }
-    .event-dot.mandarina { background: #f39c12; }
-    .event-dot.pavoreal { background: #3498db; }
-    .event-dot.grafito { background: #7f8c8d; }
-    .event-dot.arandano { background: #2c3e50; }
-    .event-dot.albahaca { background: #27ae60; }
-    .event-dot.tomate { background: #e74c3c; }
-    .event-dot.pin { background: var(--accent); }
+    .event-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .event-dot.lavanda { background: #9b59b6; } .event-dot.salvia { background: #2ecc71; }
+    .event-dot.uva { background: #8e44ad; } .event-dot.flamingo { background: #e91e8e; }
+    .event-dot.banana { background: #f1c40f; } .event-dot.mandarina { background: #f39c12; }
+    .event-dot.pavoreal { background: #3498db; } .event-dot.grafito { background: #7f8c8d; }
+    .event-dot.arandano { background: #2c3e50; } .event-dot.albahaca { background: #27ae60; }
+    .event-dot.tomate { background: #e74c3c; } .event-dot.pin { background: var(--accent); }
     .event-info { flex: 1; }
-    .event-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .event-time {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-    .event-suggestion {
-      font-size: 12px;
-      color: var(--accent);
-      font-style: italic;
-      margin-top: 4px;
-      line-height: 1.4;
-    }
-    .free-block {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 0;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .free-icon { font-size: 14px; }
+    .event-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .event-time { font-size: 12px; color: var(--text-muted); }
+    .event-suggestion { font-size: 12px; color: var(--accent); font-style: italic; margin-top: 4px; line-height: 1.4; }
+    .free-block { display: flex; align-items: center; gap: 12px; padding: 8px 0; font-size: 13px; color: var(--text-muted); }
 
     /* Inbox */
-    .email-item {
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
+    .email-item { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .email-item:last-child { border-bottom: none; }
-    .email-item.urgent {
-      border-left: 3px solid var(--red);
-      padding-left: 12px;
-      margin-left: -4px;
-    }
-    .email-from {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .email-subject {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .email-more {
-      text-align: center;
-      padding: 12px 0;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
+    .email-item.urgent { border-left: 3px solid var(--red); padding-left: 12px; margin-left: -4px; }
+    .email-from { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .email-subject { font-size: 13px; color: var(--text-muted); }
+    .email-more { text-align: center; padding: 12px 0; font-size: 13px; color: var(--text-muted); }
 
     /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .stat-box {
-      background: rgba(255,255,255,0.03);
-      border-radius: 12px;
-      padding: 14px;
-      text-align: center;
-    }
-    .stat-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--green);
-    }
-    .stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-    .progress-bar-container {
-      background: rgba(255,255,255,0.05);
-      border-radius: 8px;
-      height: 8px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      border-radius: 8px;
-      background: linear-gradient(90deg, var(--accent), var(--green));
-      transition: width 1s ease;
-    }
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-    .trend-up { color: var(--green); }
-    .trend-down { color: var(--red); }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .stat-box { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 14px; text-align: center; }
+    .stat-value { font-size: 24px; font-weight: 700; color: var(--green); }
+    .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+    .progress-bar-container { background: rgba(255,255,255,0.05); border-radius: 8px; height: 8px; overflow: hidden; }
+    .progress-bar { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--accent), var(--green)); transition: width 1s ease; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .trend-up { color: var(--green); } .trend-down { color: var(--red); }
 
     /* Tip */
-    .tip-card {
-      background: linear-gradient(135deg, #1a2a1a 0%, #1a1a2e 100%);
-      border: 1px solid rgba(46, 204, 113, 0.15);
-    }
-    .tip-text {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    /* Weather recommendation alert */
+    .tip-card { background: linear-gradient(135deg, #1a2a1a 0%, #1a1a2e 100%); border: 1px solid rgba(46,204,113,0.15); }
+    .tip-text { font-size: 14px; line-height: 1.6; }
     .weather-alert {
-      background: rgba(231, 76, 60, 0.1);
-      border: 1px solid rgba(231, 76, 60, 0.2);
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-top: 12px;
-      font-size: 13px;
-      line-height: 1.5;
+      background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.2);
+      border-radius: 12px; padding: 12px 16px; margin-top: 12px; font-size: 13px; line-height: 1.5;
     }
 
-    /* Pull to refresh indicator */
-    .refresh-indicator {
-      text-align: center;
-      padding: 12px;
-      font-size: 12px;
-      color: var(--text-muted);
-      display: none;
-    }
-    .refresh-indicator.visible { display: block; }
+    /* Skeleton */
+    .skeleton { background: linear-gradient(90deg, var(--card) 25%, var(--card-hover) 50%, var(--card) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; height: 20px; margin-bottom: 8px; }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    .fade-in { animation: fadeIn 0.5s ease forwards; opacity: 0; }
+    @keyframes fadeIn { to { opacity: 1; } }
 
-    /* Loading skeleton */
-    .skeleton {
-      background: linear-gradient(90deg, var(--card) 25%, var(--card-hover) 50%, var(--card) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 8px;
-      height: 20px;
-      margin-bottom: 8px;
-    }
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-
-    /* Animations */
-    .fade-in {
-      animation: fadeIn 0.5s ease forwards;
-      opacity: 0;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    .card:nth-child(2) { animation-delay: 0.1s; }
-    .card:nth-child(3) { animation-delay: 0.2s; }
-    .card:nth-child(4) { animation-delay: 0.3s; }
-    .card:nth-child(5) { animation-delay: 0.4s; }
-    .card:nth-child(6) { animation-delay: 0.5s; }
-
-    /* Floating Action Button */
+    /* ========== FAB & QUICK ACTIONS ========== */
     .fab {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #6c63ff 0%, #4834d4 100%);
-      border: none;
-      color: white;
-      font-size: 28px;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s, box-shadow 0.3s;
+      position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
+      border-radius: 50%; background: linear-gradient(135deg, #6c63ff 0%, #4834d4 100%);
+      border: none; color: white; font-size: 28px; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(108,99,255,0.4); z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s;
     }
     .fab:active { transform: scale(0.9); }
     .fab.open { transform: rotate(45deg); }
 
-    /* Quick Actions Menu */
     .quick-actions {
-      position: fixed;
-      bottom: 96px;
-      right: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 99;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(20px);
-      transition: opacity 0.3s, transform 0.3s;
+      position: fixed; bottom: 96px; right: 24px; display: flex; flex-direction: column;
+      gap: 12px; z-index: 99; opacity: 0; pointer-events: none;
+      transform: translateY(20px); transition: opacity 0.3s, transform 0.3s;
     }
-    .quick-actions.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-    .quick-action {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-    .quick-action-label {
-      background: var(--card);
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-      box-shadow: var(--shadow);
-    }
+    .quick-actions.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .quick-action { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+    .quick-action-label { background: var(--card); padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; white-space: nowrap; box-shadow: var(--shadow); }
     .quick-action-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s;
+      width: 48px; height: 48px; border-radius: 50%; border: none; font-size: 20px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow);
     }
     .quick-action-btn:active { transform: scale(0.9); }
     .qa-agenda { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
     .qa-ejercicio { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; }
-    .qa-briefing { background: linear-gradient(135deg, #f39c12, #e67e22); color: white; }
-    .qa-claude { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
+    .qa-refresh { background: linear-gradient(135deg, #3498db, #2980b9); color: white; }
 
-    /* Overlay */
     .overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 98;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); z-index: 98; opacity: 0;
+      pointer-events: none; transition: opacity 0.3s;
     }
-    .overlay.visible {
-      opacity: 1;
-      pointer-events: auto;
+    .overlay.visible { opacity: 1; pointer-events: auto; }
+
+    /* ========== MODAL FORMS ========== */
+    .modal {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); z-index: 200; display: none;
+      align-items: flex-end; justify-content: center;
     }
+    .modal.visible { display: flex; }
+    .modal-content {
+      background: var(--card); border-radius: 20px 20px 0 0; padding: 24px;
+      width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+    }
+    .modal-title { font-size: 20px; font-weight: 700; }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.1);
+      border: none; color: var(--text); font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-label { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block; }
+    .form-input, .form-select {
+      width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+      color: var(--text); font-size: 16px; font-family: inherit; outline: none;
+      -webkit-appearance: none;
+    }
+    .form-input:focus, .form-select:focus { border-color: var(--accent); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238888aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-select option { background: #1a1a2e; color: var(--text); }
+    .submit-btn {
+      width: 100%; padding: 14px; background: linear-gradient(135deg, #6c63ff, #4834d4);
+      border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600;
+      cursor: pointer; font-family: inherit; margin-top: 8px;
+    }
+    .submit-btn:active { opacity: 0.8; }
+    .submit-btn:disabled { opacity: 0.5; }
+    .submit-btn.success { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+    .submit-btn.error { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+    /* Toast notification */
+    .toast {
+      position: fixed; top: 40px; left: 50%; transform: translateX(-50%);
+      background: var(--green); color: white; padding: 12px 24px; border-radius: 12px;
+      font-size: 14px; font-weight: 600; z-index: 300; opacity: 0;
+      transition: opacity 0.3s; pointer-events: none; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .toast.visible { opacity: 1; }
+    .toast.error { background: var(--red); }
   </style>
 </head>
 <body>
 
   <div id="app">
-    <div class="refresh-indicator" id="refreshIndicator">Actualizando...</div>
-
     <!-- Header -->
-    <div class="header fade-in" id="header">
+    <div class="header fade-in">
       <div class="greeting" id="greeting">Buenos dias, Eduardo!</div>
       <div class="date" id="dateDisplay">Cargando...</div>
       <div class="updated" id="updatedAt"></div>
     </div>
 
-    <!-- Weather Bar -->
-    <div class="weather-bar fade-in" id="weatherBar">
+    <!-- Weather -->
+    <div class="weather-bar fade-in">
       <div>
         <div class="weather-temp" id="weatherTemp">--&deg;C</div>
         <div class="rain-badge" id="rainBadge">--% lluvia</div>
@@ -480,9 +248,9 @@
     </div>
 
     <!-- Motivacion -->
-    <div class="card motivacion-card fade-in" id="motivacionCard">
+    <div class="card motivacion-card fade-in">
       <div class="card-header">
-        <span class="icon" id="motivacionIcon">&#128170;</span>
+        <span id="motivacionIcon">&#128170;</span>
         <span id="motivacionCategory">ESTOICO</span>
         <span>&middot;</span>
         <span id="motivacionDay">Lunes</span>
@@ -498,62 +266,42 @@
     </div>
 
     <!-- Agenda -->
-    <div class="card fade-in" id="agendaCard">
+    <div class="card fade-in">
       <div class="card-header">
-        <span class="icon">&#128197;</span>
+        <span>&#128197;</span>
         <span>Agenda</span>
         <span>&middot;</span>
         <span id="eventCount">0 eventos</span>
       </div>
-      <div id="agendaList">
-        <div class="skeleton"></div>
-        <div class="skeleton" style="width:70%"></div>
-      </div>
+      <div id="agendaList"><div class="skeleton"></div><div class="skeleton" style="width:70%"></div></div>
     </div>
 
     <!-- Inbox -->
-    <div class="card fade-in" id="inboxCard">
+    <div class="card fade-in">
       <div class="card-header">
-        <span class="icon">&#128236;</span>
+        <span>&#128236;</span>
         <span>Inbox</span>
         <span>&middot;</span>
         <span id="unreadCount">0 no leidos</span>
       </div>
-      <div id="inboxList">
-        <div class="skeleton"></div>
-        <div class="skeleton" style="width:60%"></div>
-      </div>
+      <div id="inboxList"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
     </div>
 
     <!-- Stats -->
-    <div class="card fade-in" id="statsCard">
+    <div class="card fade-in">
       <div class="card-header">
-        <span class="icon">&#128200;</span>
+        <span>&#128200;</span>
         <span>Ejercicio</span>
         <span>&middot;</span>
         <span id="statsMonth">Abril</span>
       </div>
       <div class="stats-grid">
-        <div class="stat-box">
-          <div class="stat-value" id="statSessions">--</div>
-          <div class="stat-label">Sesiones</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-value" id="statCalories">--</div>
-          <div class="stat-label">Calorias</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-value" id="statDistance">--</div>
-          <div class="stat-label">Kilometros</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-value" id="statDuration">--</div>
-          <div class="stat-label">Minutos</div>
-        </div>
+        <div class="stat-box"><div class="stat-value" id="statSessions">--</div><div class="stat-label">Sesiones</div></div>
+        <div class="stat-box"><div class="stat-value" id="statCalories">--</div><div class="stat-label">Calorias</div></div>
+        <div class="stat-box"><div class="stat-value" id="statDistance">--</div><div class="stat-label">Kilometros</div></div>
+        <div class="stat-box"><div class="stat-value" id="statDuration">--</div><div class="stat-label">Minutos</div></div>
       </div>
-      <div class="progress-bar-container">
-        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
-      </div>
+      <div class="progress-bar-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
       <div class="progress-label">
         <span id="progressText">0 de 12 sesiones</span>
         <span id="trendText" class="trend-up">--</span>
@@ -561,74 +309,161 @@
     </div>
 
     <!-- Tip -->
-    <div class="card tip-card fade-in" id="tipCard">
-      <div class="card-header">
-        <span class="icon">&#128161;</span>
-        <span>Tip del dia</span>
-      </div>
+    <div class="card tip-card fade-in">
+      <div class="card-header"><span>&#128161;</span><span>Tip del dia</span></div>
       <div class="tip-text" id="tipText">--</div>
       <div class="weather-alert" id="weatherAlert" style="display:none"></div>
     </div>
-
   </div>
 
   <!-- Overlay -->
   <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-  <!-- Quick Actions Menu -->
+  <!-- Quick Actions -->
   <div class="quick-actions" id="quickActions">
     <div class="quick-action">
       <span class="quick-action-label">Agendar evento</span>
-      <a href="https://claude.ai/code?q=agendame+un+evento" target="_blank" class="quick-action-btn qa-agenda">&#128197;</a>
+      <button class="quick-action-btn qa-agenda" onclick="openModal('event')">&#128197;</button>
     </div>
     <div class="quick-action">
       <span class="quick-action-label">Registrar ejercicio</span>
-      <a href="https://claude.ai/code?q=registra+ejercicio" target="_blank" class="quick-action-btn qa-ejercicio">&#127939;</a>
+      <button class="quick-action-btn qa-ejercicio" onclick="openModal('exercise')">&#127939;</button>
     </div>
     <div class="quick-action">
-      <span class="quick-action-label">Mi briefing</span>
-      <a href="https://claude.ai/code?q=dame+mi+briefing" target="_blank" class="quick-action-btn qa-briefing">&#9728;&#65039;</a>
-    </div>
-    <div class="quick-action">
-      <span class="quick-action-label">Hablar con Claude</span>
-      <a href="https://claude.ai/code" target="_blank" class="quick-action-btn qa-claude">&#129302;</a>
+      <span class="quick-action-label">Actualizar datos</span>
+      <button class="quick-action-btn qa-refresh" onclick="refreshFromAPI()">&#128260;</button>
     </div>
   </div>
 
-  <!-- Floating Action Button -->
   <button class="fab" id="fab" onclick="toggleMenu()">+</button>
 
-  <script>
-    function toggleMenu() {
-      const fab = document.getElementById('fab');
-      const menu = document.getElementById('quickActions');
-      const overlay = document.getElementById('overlay');
-      const isOpen = menu.classList.contains('visible');
+  <!-- MODAL: Crear Evento -->
+  <div class="modal" id="eventModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">&#128197; Nuevo evento</div>
+        <button class="modal-close" onclick="closeModal('event')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Titulo</label>
+        <input type="text" class="form-input" id="evTitle" placeholder="Ej: Cita con el medico">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Fecha</label>
+          <input type="date" class="form-input" id="evDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hora</label>
+          <input type="time" class="form-input" id="evTime" value="09:00">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Duracion (min)</label>
+          <select class="form-select" id="evDuration">
+            <option value="30">30 min</option>
+            <option value="60" selected>1 hora</option>
+            <option value="90">1.5 horas</option>
+            <option value="120">2 horas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select class="form-select" id="evCategory">
+            <option value="trabajo">&#128312; Trabajo</option>
+            <option value="ejercicio">&#128994; Ejercicio</option>
+            <option value="salud">&#128311; Salud</option>
+            <option value="estudio">&#128995; Estudio</option>
+            <option value="social">&#128312; Social</option>
+            <option value="finanzas">&#128312; Finanzas</option>
+            <option value="familia">&#128994; Familia</option>
+            <option value="urgente">&#128308; Urgente</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Recordatorio</label>
+        <select class="form-select" id="evReminder">
+          <option value="15">15 min antes</option>
+          <option value="30" selected>30 min antes</option>
+          <option value="60">1 hora antes</option>
+          <option value="1440">1 dia antes</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notas (opcional)</label>
+        <input type="text" class="form-input" id="evNotes" placeholder="Ej: Llevar documentos">
+      </div>
+      <button class="submit-btn" id="evSubmit" onclick="submitEvent()">Crear evento</button>
+    </div>
+  </div>
 
-      fab.classList.toggle('open');
-      menu.classList.toggle('visible');
-      overlay.classList.toggle('visible');
-    }
-  </script>
+  <!-- MODAL: Registrar Ejercicio -->
+  <div class="modal" id="exerciseModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">&#127939; Registrar ejercicio</div>
+        <button class="modal-close" onclick="closeModal('exercise')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipo de ejercicio</label>
+        <select class="form-select" id="exType">
+          <option value="Trotar">&#127939; Trotar / Correr</option>
+          <option value="Caminar">&#128694; Caminar</option>
+          <option value="Bicicleta">&#128692; Bicicleta</option>
+          <option value="Nadar">&#127946; Nadar</option>
+          <option value="Gym">&#127947; Gym / Pesas</option>
+          <option value="Yoga">&#129496; Yoga</option>
+          <option value="Futbol">&#9917; Futbol</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Fecha</label>
+          <input type="date" class="form-input" id="exDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hora</label>
+          <input type="time" class="form-input" id="exTime" value="06:00">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Duracion (minutos)</label>
+        <input type="number" class="form-input" id="exDuration" value="45" min="5" max="300">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Calorias (kcal)</label>
+          <input type="number" class="form-input" id="exCalories" placeholder="Ej: 350" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Distancia (km)</label>
+          <input type="number" class="form-input" id="exDistance" placeholder="Ej: 5" min="0" step="0.1">
+        </div>
+      </div>
+      <button class="submit-btn" id="exSubmit" onclick="submitExercise()">Registrar ejercicio</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
   <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxcuQ8LRiflw9-uLKh0XV0QOv68Oi-y6xBOgK_r1v6KkBMFiVNLakjjouTlkARNtbyKJw/exec';
     const DATA_BASE = 'data/';
 
+    // ========== DATA LOADING ==========
     async function loadJSON(file) {
       try {
         const res = await fetch(DATA_BASE + file + '?t=' + Date.now());
         if (!res.ok) throw new Error('Not found');
         return await res.json();
-      } catch (e) {
-        console.warn('Error loading ' + file, e);
-        return null;
-      }
+      } catch(e) { return null; }
     }
 
     function timeAgo(dateStr) {
-      const now = new Date();
-      const then = new Date(dateStr);
-      const mins = Math.floor((now - then) / 60000);
+      const mins = Math.floor((new Date() - new Date(dateStr)) / 60000);
       if (mins < 1) return 'Justo ahora';
       if (mins < 60) return 'Hace ' + mins + ' min';
       const hrs = Math.floor(mins / 60);
@@ -636,110 +471,77 @@
       return 'Hace ' + Math.floor(hrs / 24) + ' dias';
     }
 
-    function getGreetingEmoji() {
+    function getGreeting() {
       const h = new Date().getHours();
-      if (h >= 5 && h < 12) return { text: 'Buenos dias', emoji: '\u2600\uFE0F' };
-      if (h >= 12 && h < 18) return { text: 'Buenas tardes', emoji: '\uD83C\uDF24\uFE0F' };
-      if (h >= 18) return { text: 'Buenas noches', emoji: '\uD83C\uDF19' };
-      return { text: 'Trasnochandola?', emoji: '\uD83E\uDD89' };
+      if (h >= 5 && h < 12) return '\u2600\uFE0F Buenos dias';
+      if (h >= 12 && h < 18) return '\uD83C\uDF24 Buenas tardes';
+      if (h >= 18) return '\uD83C\uDF19 Buenas noches';
+      return '\uD83E\uDD89 Trasnochandola?';
     }
 
+    function todayStr() {
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    }
+
+    // ========== RENDER ==========
     function renderBriefing(data) {
       if (!data) return;
-
-      const g = getGreetingEmoji();
-      document.getElementById('greeting').textContent = g.emoji + ' ' + g.text + ', Eduardo!';
+      document.getElementById('greeting').textContent = getGreeting() + ', Eduardo!';
       document.getElementById('dateDisplay').textContent = data.date_display;
       document.getElementById('updatedAt').textContent = 'Actualizado: ' + timeAgo(data.generated_at);
 
-      // Weather
       const w = data.weather;
       document.getElementById('weatherTemp').textContent = w.temp_current + '\u00B0C';
       document.getElementById('weatherCondition').textContent = w.condition;
-      document.getElementById('weatherMinMax').textContent = '\u2197\uFE0F ' + w.temp_max + '\u00B0 / \u2198\uFE0F ' + w.temp_min + '\u00B0';
+      document.getElementById('weatherMinMax').textContent = '\u2197 ' + w.temp_max + '\u00B0 / \u2198 ' + w.temp_min + '\u00B0';
       document.getElementById('weatherHumidity').textContent = '\uD83D\uDCA7 Humedad: ' + w.humidity + '%';
+      const rb = document.getElementById('rainBadge');
+      rb.textContent = '\uD83C\uDF27 ' + w.rain_probability + '% lluvia';
+      if (w.rain_probability >= 60) rb.className = 'rain-badge high';
 
-      const rainBadge = document.getElementById('rainBadge');
-      rainBadge.textContent = '\uD83C\uDF27\uFE0F ' + w.rain_probability + '% lluvia';
-      if (w.rain_probability >= 60) rainBadge.className = 'rain-badge high';
-
-      // Weather alert
       if (w.recommendation) {
-        const alert = document.getElementById('weatherAlert');
-        alert.textContent = w.recommendation;
-        alert.style.display = 'block';
+        document.getElementById('weatherAlert').textContent = w.recommendation;
+        document.getElementById('weatherAlert').style.display = 'block';
       }
 
-      // Agenda
       const a = data.agenda;
       document.getElementById('eventCount').textContent = a.event_count + ' eventos';
-
-      let agendaHTML = '';
+      let html = '';
       a.events.forEach(ev => {
-        const colorClass = ev.all_day ? 'pin' : (ev.color_name || 'lavanda');
-        const timeStr = ev.all_day ? 'Todo el dia' : ev.start + ' - ' + ev.end;
-        agendaHTML += '<div class="event">';
-        agendaHTML += '<div class="event-dot ' + colorClass + '"></div>';
-        agendaHTML += '<div class="event-info">';
-        agendaHTML += '<div class="event-title">' + ev.title + '</div>';
-        agendaHTML += '<div class="event-time">' + timeStr;
-        if (ev.meet_link) agendaHTML += ' \uD83D\uDCF9';
-        agendaHTML += '</div>';
-        if (ev.suggestion) {
-          agendaHTML += '<div class="event-suggestion">' + ev.suggestion + '</div>';
-        }
-        agendaHTML += '</div></div>';
+        const cc = ev.all_day ? 'pin' : (ev.color_name || 'lavanda');
+        const ts = ev.all_day ? 'Todo el dia' : ev.start + ' - ' + ev.end;
+        html += '<div class="event"><div class="event-dot ' + cc + '"></div><div class="event-info">';
+        html += '<div class="event-title">' + ev.title + '</div>';
+        html += '<div class="event-time">' + ts + (ev.meet_link ? ' \uD83D\uDCF9' : '') + '</div>';
+        if (ev.suggestion) html += '<div class="event-suggestion">' + ev.suggestion + '</div>';
+        html += '</div></div>';
       });
-
       a.free_blocks.forEach(fb => {
-        agendaHTML += '<div class="free-block">';
-        agendaHTML += '<span class="free-icon">\uD83C\uDF3F</span>';
-        agendaHTML += '<span>Libre: ' + fb.start + ' - ' + fb.end + ' (' + fb.hours + 'h)</span>';
-        agendaHTML += '</div>';
+        html += '<div class="free-block"><span>\uD83C\uDF3F</span><span>Libre: ' + fb.start + ' - ' + fb.end + ' (' + fb.hours + 'h)</span></div>';
       });
+      document.getElementById('agendaList').innerHTML = html;
 
-      document.getElementById('agendaList').innerHTML = agendaHTML;
-
-      // Inbox
       const inbox = data.inbox;
       document.getElementById('unreadCount').textContent = inbox.unread_count + ' no leidos';
-
-      let inboxHTML = '';
+      let ihtml = '';
       inbox.urgent.forEach(em => {
-        inboxHTML += '<div class="email-item urgent">';
-        inboxHTML += '<div class="email-from">\uD83D\uDD34 ' + em.from + '</div>';
-        inboxHTML += '<div class="email-subject">' + em.subject + ' \u2014 ' + em.preview + '</div>';
-        inboxHTML += '</div>';
+        ihtml += '<div class="email-item urgent"><div class="email-from">\uD83D\uDD34 ' + em.from + '</div>';
+        ihtml += '<div class="email-subject">' + em.subject + ' \u2014 ' + em.preview + '</div></div>';
       });
       inbox.top_emails.forEach(em => {
-        inboxHTML += '<div class="email-item">';
-        inboxHTML += '<div class="email-from">' + em.from + '</div>';
-        inboxHTML += '<div class="email-subject">' + em.subject + ' \u2014 ' + em.preview + '</div>';
-        inboxHTML += '</div>';
+        ihtml += '<div class="email-item"><div class="email-from">' + em.from + '</div>';
+        ihtml += '<div class="email-subject">' + em.subject + ' \u2014 ' + em.preview + '</div></div>';
       });
-      if (inbox.unread_count > 4) {
-        inboxHTML += '<div class="email-more">...y ' + (inbox.unread_count - 4) + ' mas</div>';
-      }
-      document.getElementById('inboxList').innerHTML = inboxHTML;
-
-      // Tip
+      if (inbox.unread_count > 4) ihtml += '<div class="email-more">...y ' + (inbox.unread_count - 4) + ' mas</div>';
+      document.getElementById('inboxList').innerHTML = ihtml;
       document.getElementById('tipText').textContent = data.tip;
     }
 
     function renderMotivacion(data) {
       if (!data) return;
-
-      const categoryEmojis = {
-        'Estoico': '\uD83D\uDCAA',
-        'Cristiano': '\u271D\uFE0F',
-        'Superacion': '\uD83D\uDD25',
-        'Sabiduria': '\uD83E\uDDE0',
-        'Exito': '\uD83C\uDFC6',
-        'Bienestar': '\uD83C\uDF3F',
-        'Gratitud': '\uD83D\uDE4F'
-      };
-
-      document.getElementById('motivacionIcon').textContent = categoryEmojis[data.category] || '\uD83D\uDCAA';
+      const emojis = { 'Estoico':'\uD83D\uDCAA','Cristiano':'\u271D\uFE0F','Superacion':'\uD83D\uDD25','Sabiduria':'\uD83E\uDDE0','Exito':'\uD83C\uDFC6','Bienestar':'\uD83C\uDF3F','Gratitud':'\uD83D\uDE4F' };
+      document.getElementById('motivacionIcon').textContent = emojis[data.category] || '\uD83D\uDCAA';
       document.getElementById('motivacionCategory').textContent = data.category.toUpperCase();
       document.getElementById('motivacionDay').textContent = data.day;
       document.getElementById('quoteText').textContent = data.quote;
@@ -750,29 +552,191 @@
 
     function renderStats(data) {
       if (!data) return;
-
       const ex = data.exercise;
       document.getElementById('statsMonth').textContent = data.month;
       document.getElementById('statSessions').textContent = ex.sessions_completed;
       document.getElementById('statCalories').textContent = ex.total_calories.toLocaleString();
       document.getElementById('statDistance').textContent = ex.total_distance_km.toFixed(1);
       document.getElementById('statDuration').textContent = ex.total_duration_min;
-
       const pct = Math.round((ex.sessions_completed / ex.sessions_expected) * 100);
       document.getElementById('progressBar').style.width = pct + '%';
       document.getElementById('progressText').textContent = ex.sessions_completed + ' de ' + ex.sessions_expected + ' sesiones';
+      const t = document.getElementById('trendText');
+      if (ex.trend === 'up') { t.textContent = '\u2191 Mejorando'; t.className = 'trend-up'; }
+      else if (ex.trend === 'down') { t.textContent = '\u2193 Bajando'; t.className = 'trend-down'; }
+      else { t.textContent = '\u2192 Estable'; }
+    }
 
-      const trendEl = document.getElementById('trendText');
-      if (ex.trend === 'up') {
-        trendEl.textContent = '\u2191 Mejorando';
-        trendEl.className = 'trend-up';
-      } else if (ex.trend === 'down') {
-        trendEl.textContent = '\u2193 Bajando';
-        trendEl.className = 'trend-down';
-      } else {
-        trendEl.textContent = '\u2192 Estable';
-        trendEl.className = '';
+    function renderLiveAgenda(data) {
+      if (!data || !data.success) return;
+      document.getElementById('eventCount').textContent = data.event_count + ' eventos';
+      let html = '';
+      data.events.forEach(ev => {
+        const cc = ev.color_name || 'lavanda';
+        const ts = ev.all_day ? 'Todo el dia' : ev.start + ' - ' + ev.end;
+        html += '<div class="event"><div class="event-dot ' + cc + '"></div><div class="event-info">';
+        html += '<div class="event-title">' + ev.title + '</div>';
+        html += '<div class="event-time">' + ts + '</div>';
+        html += '</div></div>';
+      });
+      if (data.events.length === 0) html = '<div class="free-block"><span>\uD83C\uDF3F</span><span>Dia libre! Sin eventos</span></div>';
+      document.getElementById('agendaList').innerHTML = html;
+    }
+
+    function renderLiveStats(data) {
+      if (!data || !data.success) return;
+      const ex = data.exercise;
+      document.getElementById('statsMonth').textContent = data.month;
+      document.getElementById('statSessions').textContent = ex.sessions_completed;
+      document.getElementById('statCalories').textContent = ex.total_calories.toLocaleString();
+      document.getElementById('statDistance').textContent = ex.total_distance_km.toFixed(1);
+      document.getElementById('statDuration').textContent = ex.total_duration_min;
+      const pct = Math.round((ex.sessions_completed / ex.sessions_expected) * 100);
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('progressText').textContent = ex.sessions_completed + ' de ' + ex.sessions_expected + ' sesiones';
+    }
+
+    // ========== API CALLS ==========
+    async function apiCall(data) {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    }
+
+    async function refreshFromAPI() {
+      toggleMenu();
+      showToast('\uD83D\uDD04 Actualizando datos...');
+      try {
+        const [agenda, stats] = await Promise.all([
+          fetch(API_URL + '?action=getAgenda').then(r => r.json()),
+          fetch(API_URL + '?action=getStats').then(r => r.json())
+        ]);
+        renderLiveAgenda(agenda);
+        renderLiveStats(stats);
+        document.getElementById('updatedAt').textContent = 'Actualizado: Justo ahora (en vivo)';
+        showToast('\u2705 Datos actualizados!');
+      } catch(e) {
+        showToast('\u274C Error al actualizar', true);
       }
+    }
+
+    async function submitEvent() {
+      const btn = document.getElementById('evSubmit');
+      const title = document.getElementById('evTitle').value.trim();
+      const date = document.getElementById('evDate').value;
+      const time = document.getElementById('evTime').value;
+
+      if (!title || !date || !time) { showToast('\u274C Completa titulo, fecha y hora', true); return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Creando...';
+
+      try {
+        const result = await apiCall({
+          action: 'createEvent',
+          title: title,
+          date: date,
+          startTime: time,
+          duration: parseInt(document.getElementById('evDuration').value),
+          category: document.getElementById('evCategory').value,
+          reminder: parseInt(document.getElementById('evReminder').value),
+          description: document.getElementById('evNotes').value
+        });
+
+        if (result.success) {
+          btn.textContent = '\u2705 Evento creado!';
+          btn.className = 'submit-btn success';
+          showToast('\u2705 ' + result.message);
+          setTimeout(() => { closeModal('event'); resetEventForm(); }, 1500);
+          refreshFromAPI();
+        } else {
+          throw new Error(result.error);
+        }
+      } catch(e) {
+        btn.textContent = '\u274C Error - Intentar de nuevo';
+        btn.className = 'submit-btn error';
+        showToast('\u274C ' + e.message, true);
+        setTimeout(() => { btn.textContent = 'Crear evento'; btn.className = 'submit-btn'; btn.disabled = false; }, 2000);
+      }
+    }
+
+    async function submitExercise() {
+      const btn = document.getElementById('exSubmit');
+      const date = document.getElementById('exDate').value;
+
+      if (!date) { showToast('\u274C Selecciona la fecha', true); return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Registrando...';
+
+      try {
+        const result = await apiCall({
+          action: 'registerExercise',
+          type: document.getElementById('exType').value,
+          date: date,
+          startTime: document.getElementById('exTime').value,
+          duration: parseInt(document.getElementById('exDuration').value) || 45,
+          calories: parseInt(document.getElementById('exCalories').value) || 0,
+          distance: parseFloat(document.getElementById('exDistance').value) || 0
+        });
+
+        if (result.success) {
+          btn.textContent = '\u2705 Ejercicio registrado!';
+          btn.className = 'submit-btn success';
+          showToast('\u2705 ' + result.message);
+          setTimeout(() => { closeModal('exercise'); resetExerciseForm(); }, 1500);
+          refreshFromAPI();
+        } else {
+          throw new Error(result.error);
+        }
+      } catch(e) {
+        btn.textContent = '\u274C Error - Intentar de nuevo';
+        btn.className = 'submit-btn error';
+        showToast('\u274C ' + e.message, true);
+        setTimeout(() => { btn.textContent = 'Registrar ejercicio'; btn.className = 'submit-btn'; btn.disabled = false; }, 2000);
+      }
+    }
+
+    // ========== UI HELPERS ==========
+    function toggleMenu() {
+      document.getElementById('fab').classList.toggle('open');
+      document.getElementById('quickActions').classList.toggle('visible');
+      document.getElementById('overlay').classList.toggle('visible');
+    }
+
+    function openModal(type) {
+      toggleMenu();
+      if (type === 'event') {
+        document.getElementById('evDate').value = todayStr();
+        document.getElementById('eventModal').classList.add('visible');
+      } else {
+        document.getElementById('exDate').value = todayStr();
+        document.getElementById('exerciseModal').classList.add('visible');
+      }
+    }
+
+    function closeModal(type) {
+      if (type === 'event') document.getElementById('eventModal').classList.remove('visible');
+      else document.getElementById('exerciseModal').classList.remove('visible');
+    }
+
+    function resetEventForm() {
+      document.getElementById('evTitle').value = '';
+      document.getElementById('evNotes').value = '';
+      document.getElementById('evSubmit').textContent = 'Crear evento';
+      document.getElementById('evSubmit').className = 'submit-btn';
+      document.getElementById('evSubmit').disabled = false;
+    }
+
+    function resetExerciseForm() {
+      document.getElementById('exCalories').value = '';
+      document.getElementById('exDistance').value = '';
+      document.getElementById('exSubmit').textContent = 'Registrar ejercicio';
+      document.getElementById('exSubmit').className = 'submit-btn';
+      document.getElementById('exSubmit').disabled = false;
     }
 
     function toggleReflection() {
@@ -782,24 +746,22 @@
       btn.innerHTML = r.classList.contains('visible') ? 'Cerrar \u25B2' : 'Leer mas \u25BC';
     }
 
+    function showToast(msg, isError) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast visible' + (isError ? ' error' : '');
+      setTimeout(() => { t.className = 'toast'; }, 3000);
+    }
+
+    // ========== INIT ==========
     async function loadDashboard() {
-      const [briefing, motivacion, stats] = await Promise.all([
-        loadJSON('briefing.json'),
-        loadJSON('motivacion.json'),
-        loadJSON('stats.json')
-      ]);
-
-      renderBriefing(briefing);
-      renderMotivacion(motivacion);
-      renderStats(stats);
+      const [b, m, s] = await Promise.all([loadJSON('briefing.json'), loadJSON('motivacion.json'), loadJSON('stats.json')]);
+      renderBriefing(b);
+      renderMotivacion(m);
+      renderStats(s);
     }
 
-    // Service Worker registration
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
-
-    // Load on page ready
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
     loadDashboard();
   </script>
 </body>

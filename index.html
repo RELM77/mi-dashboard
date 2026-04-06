@@ -410,43 +410,112 @@
         <div class="modal-title">&#127939; Registrar ejercicio</div>
         <button class="modal-close" onclick="closeModal('exercise')">&times;</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">Tipo de ejercicio</label>
-        <select class="form-select" id="exType">
-          <option value="Trotar">&#127939; Trotar / Correr</option>
-          <option value="Caminar">&#128694; Caminar</option>
-          <option value="Bicicleta">&#128692; Bicicleta</option>
-          <option value="Nadar">&#127946; Nadar</option>
-          <option value="Gym">&#127947; Gym / Pesas</option>
-          <option value="Yoga">&#129496; Yoga</option>
-          <option value="Futbol">&#9917; Futbol</option>
-        </select>
+
+      <!-- Tabs: Manual vs Foto -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button id="tabManual" onclick="switchExTab('manual')" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:var(--accent);color:white;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">&#9997; Manual</button>
+        <button id="tabFoto" onclick="switchExTab('foto')" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--text);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">&#128247; Desde foto</button>
       </div>
-      <div class="form-row">
+
+      <!-- Tab: Manual -->
+      <div id="exManualTab">
         <div class="form-group">
-          <label class="form-label">Fecha</label>
-          <input type="date" class="form-input" id="exDate">
+          <label class="form-label">Tipo de ejercicio</label>
+          <select class="form-select" id="exType">
+            <option value="Caminata">&#128694; Caminata al aire libre</option>
+            <option value="Trotar">&#127939; Trotar / Correr</option>
+            <option value="Bicicleta">&#128692; Bicicleta</option>
+            <option value="Nadar">&#127946; Nadar</option>
+            <option value="Gym">&#127947; Gym / Pesas</option>
+            <option value="Yoga">&#129496; Yoga</option>
+            <option value="Futbol">&#9917; Futbol</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Hora</label>
-          <input type="time" class="form-input" id="exTime" value="06:00">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Fecha</label>
+            <input type="date" class="form-input" id="exDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hora inicio</label>
+            <input type="time" class="form-input" id="exTime" value="06:00">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Duracion (min)</label>
+            <input type="number" class="form-input" id="exDuration" value="45" min="1" max="600">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Distancia (km)</label>
+            <input type="number" class="form-input" id="exDistance" placeholder="Ej: 5" min="0" step="0.01">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Cal. activas (kcal)</label>
+            <input type="number" class="form-input" id="exCalories" placeholder="Ej: 61" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cal. totales (kcal)</label>
+            <input type="number" class="form-input" id="exCaloriesTotal" placeholder="Ej: 95" min="0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Pasos</label>
+            <input type="number" class="form-input" id="exSteps" placeholder="Ej: 13613" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Frec. cardiaca (LPM)</label>
+            <input type="number" class="form-input" id="exHeartRate" placeholder="Ej: 93" min="0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Ritmo prom. (min/km)</label>
+            <input type="text" class="form-input" id="exPace" placeholder="Ej: 21:51">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Esfuerzo</label>
+            <select class="form-select" id="exEffort">
+              <option value="1">1 - Facil</option>
+              <option value="2">2 - Ligero</option>
+              <option value="3" selected>3 - Moderado</option>
+              <option value="4">4 - Intenso</option>
+              <option value="5">5 - Maximo</option>
+            </select>
+          </div>
+        </div>
+        <button class="submit-btn" id="exSubmit" onclick="submitExercise()">Registrar ejercicio</button>
+      </div>
+
+      <!-- Tab: Desde foto -->
+      <div id="exFotoTab" style="display:none;">
+        <div style="text-align:center;padding:20px 0;">
+          <div style="font-size:48px;margin-bottom:16px;">&#128247;</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-muted);margin-bottom:20px;">
+            Toma un screenshot de tu entrenamiento en <strong style="color:var(--text)">Apple Fitness</strong> y Claude extraera los datos automaticamente.
+          </p>
+          <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;">
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">&#128161; Datos que extrae de la foto:</p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span style="background:rgba(46,204,113,0.15);color:#2ecc71;padding:4px 10px;border-radius:8px;font-size:12px;">Calorias</span>
+              <span style="background:rgba(46,204,113,0.15);color:#2ecc71;padding:4px 10px;border-radius:8px;font-size:12px;">Distancia</span>
+              <span style="background:rgba(46,204,113,0.15);color:#2ecc71;padding:4px 10px;border-radius:8px;font-size:12px;">Duracion</span>
+              <span style="background:rgba(46,204,113,0.15);color:#2ecc71;padding:4px 10px;border-radius:8px;font-size:12px;">Pasos</span>
+              <span style="background:rgba(46,204,113,0.15);color:#2ecc71;padding:4px 10px;border-radius:8px;font-size:12px;">Ritmo</span>
+              <span style="background:rgba(46,204,113,0.15);color:#2ecc71;padding:4px 10px;border-radius:8px;font-size:12px;">Frec. cardiaca</span>
+            </div>
+          </div>
+          <a href="https://claude.ai/new" target="_blank" style="display:block;width:100%;padding:14px;background:linear-gradient(135deg,#e74c3c,#c0392b);border:none;border-radius:12px;color:white;font-size:16px;font-weight:600;text-decoration:none;text-align:center;font-family:inherit;">
+            &#128247; Abrir Claude y enviar foto
+          </a>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">
+            Dile a Claude: "Registra estos datos de mi ejercicio en mi calendario"
+          </p>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Duracion (minutos)</label>
-        <input type="number" class="form-input" id="exDuration" value="45" min="5" max="300">
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Calorias (kcal)</label>
-          <input type="number" class="form-input" id="exCalories" placeholder="Ej: 350" min="0">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Distancia (km)</label>
-          <input type="number" class="form-input" id="exDistance" placeholder="Ej: 5" min="0" step="0.1">
-        </div>
-      </div>
-      <button class="submit-btn" id="exSubmit" onclick="submitExercise()">Registrar ejercicio</button>
     </div>
   </div>
 
@@ -454,7 +523,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxcuQ8LRiflw9-uLKh0XV0QOv68Oi-y6xBOgK_r1v6KkBMFiVNLakjjouTlkARNtbyKJw/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwAQPGziiQbRecSO0X6ObROmjvWgMho_nXybPXn4ZTXzvwtkxRlDcLLPTzyat2PALfFCQ/exec';
     const DATA_BASE = 'data/';
 
     // ========== DATA LOADING ==========
@@ -684,7 +753,12 @@
           startTime: document.getElementById('exTime').value,
           duration: parseInt(document.getElementById('exDuration').value) || 45,
           calories: parseInt(document.getElementById('exCalories').value) || 0,
-          distance: parseFloat(document.getElementById('exDistance').value) || 0
+          caloriesTotal: parseInt(document.getElementById('exCaloriesTotal').value) || 0,
+          distance: parseFloat(document.getElementById('exDistance').value) || 0,
+          steps: parseInt(document.getElementById('exSteps').value) || 0,
+          heartRate: parseInt(document.getElementById('exHeartRate').value) || 0,
+          pace: document.getElementById('exPace').value || '',
+          effort: parseInt(document.getElementById('exEffort').value) || 3
         });
 
         if (result.success) {
@@ -705,6 +779,22 @@
     }
 
     // ========== UI HELPERS ==========
+    function switchExTab(tab) {
+      const manual = document.getElementById('exManualTab');
+      const foto = document.getElementById('exFotoTab');
+      const btnManual = document.getElementById('tabManual');
+      const btnFoto = document.getElementById('tabFoto');
+      if (tab === 'manual') {
+        manual.style.display = 'block'; foto.style.display = 'none';
+        btnManual.style.background = 'var(--accent)'; btnManual.style.color = 'white';
+        btnFoto.style.background = 'rgba(255,255,255,0.05)'; btnFoto.style.color = 'var(--text)';
+      } else {
+        manual.style.display = 'none'; foto.style.display = 'block';
+        btnFoto.style.background = 'var(--accent)'; btnFoto.style.color = 'white';
+        btnManual.style.background = 'rgba(255,255,255,0.05)'; btnManual.style.color = 'var(--text)';
+      }
+    }
+
     function toggleMenu() {
       document.getElementById('fab').classList.toggle('open');
       document.getElementById('quickActions').classList.toggle('visible');
@@ -736,11 +826,13 @@
     }
 
     function resetExerciseForm() {
-      document.getElementById('exCalories').value = '';
-      document.getElementById('exDistance').value = '';
+      ['exCalories','exCaloriesTotal','exDistance','exSteps','exHeartRate','exPace'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
       document.getElementById('exSubmit').textContent = 'Registrar ejercicio';
       document.getElementById('exSubmit').className = 'submit-btn';
       document.getElementById('exSubmit').disabled = false;
+      switchExTab('manual');
     }
 
     function toggleReflection() {

@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-04-06T07:15:00-05:00",
+  "month": "Abril 2026",
+  "exercise": {
+    "sessions_completed": 2,
+    "sessions_expected": 12,
+    "total_calories": 780,
+    "total_distance_km": 9.5,
+    "total_duration_min": 95,
+    "avg_calories_per_session": 390,
+    "avg_distance_per_session": 4.75,
+    "trend": "up",
+    "weekly": [
+      { "week": 1, "sessions": 2, "calories": 780, "distance": 9.5, "complete": false }
+    ],
+    "last_session": {
+      "date": "2026-04-04",
+      "calories": 400,
+      "distance": 5.2,
+      "duration": 48
+    }
+  }
+}

@@ -361,6 +361,97 @@
     .card:nth-child(4) { animation-delay: 0.3s; }
     .card:nth-child(5) { animation-delay: 0.4s; }
     .card:nth-child(6) { animation-delay: 0.5s; }
+
+    /* Floating Action Button */
+    .fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6c63ff 0%, #4834d4 100%);
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .fab:active { transform: scale(0.9); }
+    .fab.open { transform: rotate(45deg); }
+
+    /* Quick Actions Menu */
+    .quick-actions {
+      position: fixed;
+      bottom: 96px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .quick-actions.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .quick-action {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .quick-action-label {
+      background: var(--card);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: var(--shadow);
+    }
+    .quick-action-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .quick-action-btn:active { transform: scale(0.9); }
+    .qa-agenda { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
+    .qa-ejercicio { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; }
+    .qa-briefing { background: linear-gradient(135deg, #f39c12, #e67e22); color: white; }
+    .qa-claude { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 98;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
@@ -480,6 +571,45 @@
     </div>
 
   </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <!-- Quick Actions Menu -->
+  <div class="quick-actions" id="quickActions">
+    <div class="quick-action">
+      <span class="quick-action-label">Agendar evento</span>
+      <a href="https://claude.ai/code?q=agendame+un+evento" target="_blank" class="quick-action-btn qa-agenda">&#128197;</a>
+    </div>
+    <div class="quick-action">
+      <span class="quick-action-label">Registrar ejercicio</span>
+      <a href="https://claude.ai/code?q=registra+ejercicio" target="_blank" class="quick-action-btn qa-ejercicio">&#127939;</a>
+    </div>
+    <div class="quick-action">
+      <span class="quick-action-label">Mi briefing</span>
+      <a href="https://claude.ai/code?q=dame+mi+briefing" target="_blank" class="quick-action-btn qa-briefing">&#9728;&#65039;</a>
+    </div>
+    <div class="quick-action">
+      <span class="quick-action-label">Hablar con Claude</span>
+      <a href="https://claude.ai/code" target="_blank" class="quick-action-btn qa-claude">&#129302;</a>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button class="fab" id="fab" onclick="toggleMenu()">+</button>
+
+  <script>
+    function toggleMenu() {
+      const fab = document.getElementById('fab');
+      const menu = document.getElementById('quickActions');
+      const overlay = document.getElementById('overlay');
+      const isOpen = menu.classList.contains('visible');
+
+      fab.classList.toggle('open');
+      menu.classList.toggle('visible');
+      overlay.classList.toggle('visible');
+    }
+  </script>
 
   <script>
     const DATA_BASE = 'data/';
